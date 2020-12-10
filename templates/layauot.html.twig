@@ -1,57 +1,70 @@
-<html>
-  <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-      
-        <div id="header">
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent()}}{% endblock %}
+{% block body %}
+        <header>
            {% include('header.html.twig') %}
-        </div>
+        </header>   
 
-        <div id="wrapper">     
+                        <h6>Lista de eventos</h6>
 
-              
-
-                {% block body %}
-                            <h2>Lista de eventos</h2>
-
-                            {# total items count #}
-                        <div class="count">
-                            {{ pagination.getTotalItemCount }}
-                        </div>
-                        <table>
-                            <tr>
-                                {# sorting of properties based on query components #}
-                                <th>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
-                                <th{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>
-                                    {{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}
-                                </th>
-                                <th{% if pagination.isSorted(['a.date', 'a.time']) %} class="sorted"{% endif %}>
-                                    {{ knp_pagination_sortable(pagination, 'Release', ['a.date', 'a.time']) }}
-                                </th>
-                            </tr>
-
+                        <table class="table">
+                           <thead class="black white-text">
+                                <tr>
+                                    {# sorting of properties based on query components #}
+                                    <th scope="col" >{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+                                    <th scope="col" {% if pagination.isSorted('a.nombre') %} class="sorted"{% endif %}>
+                                        {{ knp_pagination_sortable(pagination, 'Nombre', 'a.nombre') }}
+                                    </th>
+                                    <th scope="col" {% if pagination.isSorted('a.apellisdos') %} class="sorted"{% endif %}>
+                                        {{ knp_pagination_sortable(pagination, 'Apellidos', 'a.apellidos') }}
+                                    </th>
+                                    <th scope="col"{% if pagination.isSorted(['a.dateRegister']) %} class="sorted"{% endif %}>
+                                        {{ knp_pagination_sortable(pagination, 'fecha registro', ['a.dateRegister']) }}
+                                    </th>
+                                    <th scope="col" {% if pagination.isSorted(['a.dateUpdate']) %} class="sorted"{% endif %}>
+                                        {{ knp_pagination_sortable(pagination, 'fecha actulizacion', ['a.dateUpdate']) }}
+                                    </th>
+                                                
+                                    <th scope="col" {% if pagination.isSorted('a.userAgent') %} class="sorted"{% endif %}>
+                                        {{ knp_pagination_sortable(pagination, 'Ip usuario', 'a.userAgent') }}
+                                    </th>
+                                    <th scope="col" {% if pagination.isSorted('a.idCountry') %} class="sorted"{% endif %}>
+                                        {{ knp_pagination_sortable(pagination, 'Codigo de la ciudad', 'a.idCountry') }}
+                                    </th>
+                                    <th scope="col" {% if pagination.isSorted('a.keyEvent') %} class="sorted"{% endif %}>
+                                        {{ knp_pagination_sortable(pagination, '# de evento', 'a.keyEvent') }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
                             {# table body #}
-                            {% for article in pagination %}
+                            {% for event in pagination %}
                                 <tr {% if loop.index is odd %}class="color"{% endif %}>
-                                    <td>{{ article.id }}</td>
-                                    <td>{{ article.nombre }}</td>
-                                    <td>{{ article.dateRegister | date('Y-m-d') }}, {{ article.dateUpdate | date('Y-m-d') }}</td>
+                                    <td>{{  event.id }}</td>
+                                    <td>{{  event.nombre }}</td>
+                                    <td>{{  event.apellidos }}</td>
+                                    <td>{{  event.dateRegister | date('Y-m-d') }}</td>
+                                    <td>{{ event.dateUpdate | date('Y-m-d') }}</td>
+                                    <td>{{ event.userAgent }}</td>
+                                    <td>{{ event.idCountry }}</td>
+                                    <td>{{ event.keyEvent }}</td>
                                 </tr>
                             {% endfor %}
+                            <td> {# total items count #}
+                              <div class="count">
+                                 {{ pagination.getTotalItemCount }}
+                             </div>
+                            </td>
+                         </tbody>
                         </table>
                         {# display navigation #}
                         <div class="navigation">
                             {{ knp_pagination_render(pagination) }}
                         </div>
-                </div>
-              {% endblock %}
+              
             
         <div id="footer">
           {% include('footer.html.twig') %}
         </div>
-         {% block javascripts %}{% endblock %}
-    </body>
-</html>
+        
+{% endblock %}

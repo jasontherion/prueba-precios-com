@@ -29,7 +29,7 @@ class UserController extends AbstractController
         $pagination = $paginator->paginate(
             $query, /* query NOT result */
            $request->query->getInt('page', 1), /*page number*/
-            $request->query->getInt('limit', 5) /*limit per page*/
+            4 /*limit per page*/
         );
 
      #   foreach($user_data as $user){

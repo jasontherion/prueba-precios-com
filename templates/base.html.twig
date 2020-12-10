@@ -2,11 +2,22 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}Eventos Usuarios{% endblock %}</title>
+        {% block stylesheets %}
+       
+        <link  href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet"/> 
+        <link  href="{{asset('css/stylesheet.min.css')}}" rel="stylesheet"/>   
+         {{ encore_entry_link_tags('app') }}    
+        {% endblock %}
     </head>
-    <body>
+    <body class="fondo" >
+     
+      <div class="container p-3 my-3 border bg-light">
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        <script src="{{asset('js/bootstrap.min.js')}}"></script>
+        <script src="{{asset('js/query.min.js')}}"></script>
+        {% endblock %}
+      </div>
     </body>
 </html>
